@@ -1,8 +1,8 @@
 import tensorflow as tf
 
 cluster_spec = {
-    "ps": ["localhost:2221", "localhost:2222"],
-    "worker": ["localhost:2223", "localhost:2224"]}
+    "ps": ["ec2-52-77-227-193.ap-southeast-1.compute.amazonaws.com:2221", "ec2-54-169-126-11.ap-southeast-1.compute.amazonaws.com:2222"],
+    "worker": ["ec2-52-77-227-193.ap-southeast-1.compute.amazonaws.com:2223", "ec2-54-169-126-11.ap-southeast-1.compute.amazonaws.com:2224"]}
 
 with tf.device(tf.train.replica_device_setter(cluster=cluster_spec)):  # the same as ps_tasks=1
 #with tf.device(tf.train.replica_device_setter(ps_tasks=1)):
@@ -19,7 +19,7 @@ with tf.device(tf.train.replica_device_setter(cluster=cluster_spec)):  # the sam
     
 init = tf.global_variables_initializer()
     
-with tf.Session("grpc://localhost: 2222", config=tf.ConfigProto(log_device_placement=True)) as sess:
+with tf.Session("grpc://ec2-52-77-227-193.ap-southeast-1.compute.amazonaws.com:2221", config=tf.ConfigProto(log_device_placement=True)) as sess:
     sess.run(init)
     print("s: ", s.eval())
     print("p1: ", p1.eval())
